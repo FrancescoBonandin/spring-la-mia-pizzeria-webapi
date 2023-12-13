@@ -48,7 +48,8 @@ public class Ingrediente {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
+	
+	
 	public List<Pizza> getPizzas() {
 		return pizzas;
 	}
@@ -58,7 +59,7 @@ public class Ingrediente {
 		this.pizzas = pizzas;
 	}
 	
-	@JsonIgnore
+	
 	public void setPizzas(Pizza... pizzas) {
 		setPizzas(Arrays.asList(pizzas));
 	}
