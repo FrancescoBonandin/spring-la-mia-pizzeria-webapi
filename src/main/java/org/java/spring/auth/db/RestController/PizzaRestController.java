@@ -66,6 +66,8 @@ public class PizzaRestController {
 	
 		Pizza pizza = pizzaService.findById(id);
 		
+		if (pizza == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
 		pizza.setNome(newPizza.getNome());
 		pizza.setDescrizione(newPizza.getDescrizione());
 		
@@ -84,7 +86,9 @@ public class PizzaRestController {
 	public ResponseEntity<Pizza> routeDelete(
 			@PathVariable int id) {
 		
-		Pizza pizza = pizzaService.findById(id);
+		Pizza pizza = pizzaService.findPizzaWithIngredients(id);
+		
+		if (pizza == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		
 		pizza.getOffertaSpeciale().forEach(offertaSpecialeService::delete);
 		

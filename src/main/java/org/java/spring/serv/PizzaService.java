@@ -1,11 +1,15 @@
 package org.java.spring.serv;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.hibernate.Hibernate;
 import org.java.spring.pojo.Pizza;
 import org.java.spring.repo.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class PizzaService  {
@@ -80,6 +84,22 @@ public class PizzaService  {
 		
 		pizzaRepository.delete(pizza);
 		
+	}
+	
+	@Transactional
+	public Pizza findPizzaWithIngredients(int id){
+		
+		Optional<Pizza> pizzaOpt =pizzaRepository.findById(id);
+		
+		if (!pizzaOpt.isPresent()) {
+			return null;
+		}
+		
+		Pizza pizza = pizzaOpt.get();
+		
+		Hibernate.initialize(pizza.getIngredienti());
+		
+		return pizza;
 	}
 	
 	public void deleteById(int id) {
